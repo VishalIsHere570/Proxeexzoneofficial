@@ -1,0 +1,1463 @@
+<div id="root">&lt;!DOCTYPE html&gt;</div>
+<div id="root">&lt;**** lang="en"&gt;</div>
+<div id="root">&nbsp; &lt;head&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;meta charset="UTF-8" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;**** name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;title&gt;ProxeeXZone - Download Astute Proxy&lt;/title&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;****** src="https://cdn.tailwindcss.com?plugins=typography"&gt;&lt;/script&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;script&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; tailwind.config = {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; darkMode: 'class',</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; theme: {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; extend: {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; fontFamily: {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; poppins: ['Poppins', 'sans-serif'],</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; },</div>
+<div id="root">&nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &lt;/script&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&amp;display=swap" rel="stylesheet" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;style&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; @keyframes fadeIn {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; from { opacity: 0; transform: translateY(10px); }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; to { opacity: 1; transform: translateY(0); }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; .fade-in {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; animation: fadeIn 0.5s ease-out forwards;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &lt;/style&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;!-- React ********* --&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin&gt;&lt;/script&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin&gt;&lt;/script&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;script src="https://unpkg.com/react-router-dom@6.23.1/dist/umd/react-router-dom.production.min.js"&gt;&lt;/script&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</div>
+<div id="root">&nbsp; &lt;/head&gt;</div>
+<div id="root">&nbsp; &lt;body class="bg-slate-100 dark:bg-slate-900"&gt;</div>
+<div id="root">&nbsp; &nbsp; &lt;div id="root"&gt;&lt;/div&gt;</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &lt;****** type="text/babel"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const { useState, useEffect, createContext, useContext, StrictMode, useRef } = React;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const { createRoot } = ReactDOM;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const { HashRouter, Routes, Route, Link, useLocation } = ReactRouterDOM;</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; // --- Theme Context ---</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const ThemeContext = createContext(undefined);</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const getInitialTheme = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; if (typeof window !== 'undefined' &amp;&amp; window.localStorage) {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ***** *********** = window.localStorage.getItem('theme');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (typeof storedPrefs === 'string' &amp;&amp; (storedPrefs === 'light' || storedPrefs === 'dark')) {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ****** storedPrefs;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return 'dark';</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const ThemeProvider = ({ children }) =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; ***** [theme, setTheme] = useState(getInitialTheme);</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; useEffect(() =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const root = window.document.documentElement;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (theme === 'dark') {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; root.classList.add('dark');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } else {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; root.classList.remove('dark');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; localStorage.setItem('theme', theme);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; }, [theme]);</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const toggleTheme = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setTheme(prevTheme =&gt; (prevTheme === 'light' ? 'dark' : 'light'));</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ThemeContext.Provider value={{ theme, toggleTheme }}&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {children}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ThemeContext.Provider&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const useTheme = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const context = useContext(ThemeContext);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; if (context === undefined) {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throw *** Error('useTheme must be used within a ThemeProvider');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; ****** context;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; // --- Components ---</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const ScrollToTopButton = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const [isVisible, setIsVisible] = useState(false);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const toggleVisibility = () =&gt; { window.pageYOffset &gt; 300 ? setIsVisible(true) : setIsVisible(false); };</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const scrollToTop = () =&gt; { window.scrollTo({ top: 0, behavior: 'smooth' }); };</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; useEffect(() =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; window.addEventListener('scroll', toggleVisibility);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ****** () =&gt; window.removeEventListener('scroll', toggleVisibility);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; }, []);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button type="button" onClick={scrollToTop} className={`fixed bottom-5 right-5 bg-indigo-600 text-white w-12 h-12 rounded-lg flex items-center justify-center text-xl shadow-lg hover:bg-indigo-700 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`} aria-label="Go to top"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;i className="fas fa-arrow-up"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const Breadcrumb = ({ items }) =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;nav className="text-sm text-slate-5** dark:text-slate-4** mb-4 max-w-4xl mx-auto" aria-label="Breadcrumb"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="list-none p-0 inline-**** flex-wrap"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {items.map((item, index) =&gt; (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li key={index} className="flex items-center"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {item.path ? (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Link to={item.path} className="hover:text-indigo-500"&gt;{item.label}&lt;/Link&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ) : (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span className="text-slate-600 dark:text-slate-500 truncate"&gt;{item.label}&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {index &lt; items.length - 1 &amp;&amp; (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;svg className="fill-current w-3 h-3 mx-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569 9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.*** 33.941z" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/svg&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ))}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ol&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/nav&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root">&nbsp; &nbsp; &nbsp;&nbsp;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const Header = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const { theme, toggleTheme } = useTheme();</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;****** className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm ****** top-0 z-50 border-b border-slate-200/50 dark:border-slate-800/50 transition-****** duration-300"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="********* mx-auto px-4 py-3 **** justify-******* items-center"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="flex items-center space-x-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Link to="/" className="text-3xl font-extrabold"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;**** className="text-indigo-600 dark:text-indigo-500"&gt;ProxeeX&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span className="text-slate-9** dark:text-white"&gt;Zone&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/Link&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="**** items-center space-x-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={toggleTheme} aria-label="Toggle theme" className={`relative text-lg flex items-center justify-between bg-slate-200 dark:bg-slate-800 p-1 rounded-full w-14 h-8 transition-colors`}&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;i className="*** fa-sun text-yellow-500 pl-1"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;i className="fas fa-moon text-indigo-3** pr-1"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span className={`absolute bg-white dark:bg-slate-900 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 left-1 top-1 ${theme === 'dark' ? 'translate-x-6' : ''}`}&gt;&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button className="text-slate-8** dark:text-***** text-2** ****** sm:block"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;i className="fas fa-search"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/header&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const Footer = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const openInNewTab = (url) =&gt; { if (url &amp;&amp; url !== '#') { window.open(url, '_blank', 'noopener,noreferrer'); } };</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const SocialButton = ({ icon, name, baseColor, hoverColor, href }) =&gt; (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab(href)} className={`flex-1 text-center py-3 px-4 rounded-lg text-white font-semibold transition-colors duration-300 ${baseColor} ${hoverColor}`}&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;i className={`${icon} mr-2`}&gt;&lt;/i&gt;{name}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;footer className="bg-white dark:bg-slate-900/70 text-slate-600 dark:text-slate-400 mt-12 pt-10 transition-****** duration-3** ring-1 ring-slate-900/5"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="max-w-4xl mx-auto px-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="mb-10"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h3 className="text-** font-bold text-slate-900 dark:text-white mb-2 flex items-center"&gt;****** Plugin &lt;**** className="w-2 h-2 bg-indigo-500 rounded-full ml-2"&gt;&lt;/span&gt;&lt;/h3&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="**** grid-cols-2 md:grid-cols-4 gap-3"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;SocialButton icon="*** fa-facebook-f" name="Facebook" baseColor="bg-blue-600" hoverColor="hover:bg-blue-700" href="#" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;************ icon="*** fa-telegram-plane" name="Telegram" baseColor="bg-sky-500" hoverColor="hover:bg-sky-600" href="#" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;SocialButton icon="fab fa-instagram" name="Instagram" baseColor="bg-pink-500" hoverColor="hover:bg-pink-600" href="#" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;SocialButton icon="fab fa-youtube" name="Youtube" baseColor="bg-red-600" hoverColor="hover:bg-red-700" href="#" /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="text-center py-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-4** font-extrabold mb-2"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;**** className="text-indigo-600 dark:text-indigo-500"&gt;ProxeeX&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span className="text-slate-900 dark:text-white"&gt;Zone&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="max-w-** mx-auto mb-6"&gt;Explore ****** tips &amp; tricks, resources *** **** right here!&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="flex justify-****** space-x-4 text-xl"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('#')} className="hover:text-indigo-500"&gt;&lt;i className="fab fa-facebook-f"&gt;&lt;/i&gt;&lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('#')} className="hover:text-indigo-500"&gt;&lt;i className="fab fa-youtube"&gt;&lt;/i&gt;&lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('#')} className="hover:text-indigo-500"&gt;&lt;i className="fab fa-instagram"&gt;&lt;/i&gt;&lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('#')} className="hover:text-indigo-500"&gt;&lt;i className="fab fa-telegram-plane"&gt;&lt;/i&gt;&lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-slate-200 dark:bg-black py-4 transition-colors duration-300"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="max-w-4xl mx-auto px-4 text-center md:flex md:justify-between items-center text-sm"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="flex justify-center space-x-4 mb-2 md:mb-0"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;a href="#" onClick={(e) =&gt; e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white"&gt;Home&lt;/a&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;a href="#" onClick={(e) =&gt; e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white"&gt;About&lt;/a&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;a href="#" onClick={(e) =&gt; e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white"&gt;Contact us&lt;/a&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;a href="#" onClick={(e) =&gt; e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white"&gt;Privacy Policy&lt;/a&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;&amp;copy; All Right Reserved Copyright &amp;copy; ProxeeXZone&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/footer&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; // --- Pages ---</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const OverviewPage = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const FeatureTable = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const features = [ { name: 'All Bundles', description: 'From legendary to mythic outfits unlocked' }, { name: 'Unlimited Diamonds', description: 'Get diamonds and coins for free' }, { name: 'Emotes', description: 'Use all emotes anytime' }, { name: 'Weapon Skins', description: 'Rare &amp; upgraded guns available' }, { name: 'No Root', description: 'Fully works without rooting your Android' }, { name: 'Anti-Ban', description: "Doesn't touch official servers &ndash; safe to use" }, { name: 'No Login', description: 'Play as guest with full access' }, ];</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ****** (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="my-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-9** dark:text-***** mb-4 **** items-center gap-2"&gt;&lt;i className="*** fa-gamepad text-indigo-400"&gt;&lt;/i&gt;Key Features of ****** **** Fire Proxy&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="overflow-x-auto rounded-lg ring-1 ring-slate-900/5 shadow-lg"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;table className="w-full text-left table-auto"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;thead className="bg-slate-50 dark:bg-slate-800/50"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;tr&gt;&lt;th className="p-4 font-******** text-slate-800 dark:text-white w-2/5"&gt;Feature&lt;/th&gt;&lt;th className="p-4 font-******** text-slate-800 dark:text-white w-3/5"&gt;Description&lt;/th&gt;&lt;/tr&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/thead&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;tbody className="bg-***** dark:bg-slate-900/50"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {features.map((feature, index) =&gt; (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;tr key={index} className="border-b border-slate-200 dark:border-slate-700 last:border-b-0"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;td className="p-4 font-medium text-slate-900 dark:text-white"&gt;{feature.name}&lt;/td&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;td className="p-4 text-slate-700 dark:text-slate-300"&gt;{feature.description}&lt;/td&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/tr&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ))}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/tbody&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/table&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; };</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Free Fire', path: '/' }, { label: 'Astute Proxy Server Download' }, ];</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Breadcrumb items={breadcrumbItems} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;article className="max-w-4xl mx-auto bg-white dark:bg-slate-900/70 shadow-xl ring-1 ring-slate-900/5 rounded-xl p-6 md:p-** my-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h1 className="text-3xl md:text-4** font-bold text-slate-900 dark:text-white mb-6"&gt;Astute Free Fire Proxy Server: Download Information&lt;/h1&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="mb-6 relative overflow-hidden rounded-lg"&gt;&lt;img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663232785318/sIumySaDIKHZQBBa.jpg" alt="Anime ********* with sunglasses" className="w-full rounded-lg shadow-** shadow-indigo-500/20" /&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="prose dark:prose-****** prose-lg max-w-none text-slate-700 dark:text-slate-3** space-y-6"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;Welcome! This page provides all the ******* you need about *** &lt;strong className="text-slate-900 dark:text-white"&gt;****** Free Fire Proxy Server&lt;/strong&gt;. We ******* ** transparency, so *** can understand exactly what you're downloading and how ** enhances **** gaming experience.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-***** **** items-center gap-2"&gt;&lt;i className="fas fa-question-****** text-indigo-400"&gt;&lt;/i&gt;What is the Astute Free **** ***** Server?&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;*** &lt;****** className="text-slate-900 dark:text-white"&gt;Astute Proxy Server&lt;/strong&gt; ** a custom-built private environment for Free **** enthusiasts. It's not a hack or a cheat, but rather a sandboxed server that lets *** experience *** game with ********** unlocked. Think ** ** as a VIP **** ** ******* all the premium ***** and features Garena *** to offer, without any impact on your official game account.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"&gt;&lt;i className="fas fa-star text-yellow-400"&gt;&lt;/i&gt;Why ** People Download It?&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;Players **** the Astute ***** Server for several reasons:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li className="flex items-start"&gt;&lt;i className="*** fa-infinity text-cyan-4** mr-3 w-5 text-center flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;Total Freedom:&lt;/strong&gt; ********* access every skin, bundle, emote, and ****** in the game. It's the ultimate way to customize your character *** find your perfect style.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li className="**** items-start"&gt;&lt;i className="fas fa-shield-*** text-green-400 mr-3 w-5 text-****** flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;Safe Exploration:&lt;/strong&gt; ******* it operates ** a separate server, **** main account ** ***** ** risk. *** can experiment freely without **** of bans or penalties.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li className="flex items-start"&gt;&lt;i className="fas fa-lightbulb text-purple-400 mr-3 w-5 text-center flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;Strategic Advantage:&lt;/strong&gt; Test *** different character skills and weapon attachments to discover powerful ************ *** can apply in the ******** game.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;FeatureTable /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="my-8"&gt;&lt;*** src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663232785318/SJxbOeeVCkhJZikt.jpg" alt="**** character" className="w-full rounded-** shadow-lg shadow-indigo-500/20" /&gt;&lt;p className="text-center text-slate-500 dark:text-slate-400 mt-2 italic"&gt;Unlock your **** potential.&lt;/p&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-**** text-slate-900 dark:text-***** **** items-center gap-2"&gt;&lt;i className="fas fa-info-circle text-sky-400"&gt;&lt;/i&gt;Version ******* &amp; User Benefits&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;This download is for *** latest version, fully compatible with the &lt;strong className="text-amber-400"&gt;OB51 Update&lt;/strong&gt;. We ********* update the server to ensure a smooth, bug-free experience. By using this proxy, you benefit from:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="flex items-start"&gt;&lt;i className="*** fa-rocket text-red-400 mr-3 w-5 text-****** flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;******* Access:&lt;/strong&gt; No waiting, no grinding. Everything is unlocked *** ****** you log in.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="flex items-start"&gt;&lt;i className="fas fa-user-******* text-blue-400 mr-3 w-5 text-****** flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;Guest Login:&lt;/strong&gt; No need to use your personal credentials. The proxy works perfectly with a guest account.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li className="flex items-start"&gt;&lt;i className="fas fa-mobile-alt text-slate-4** mr-3 w-5 text-center flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;&lt;strong&gt;Android Optimized:&lt;/strong&gt; The app is *********** and designed to run smoothly ** a **** range of Android devices without rooting.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white **** items-center gap-2"&gt;&lt;i className="fas fa-******** text-orange-400"&gt;&lt;/i&gt;Frequently Asked Questions (FAQ)&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;** className="font-semibold text-slate-900 dark:text-white"&gt;Is this safe for my device?&lt;/dt&gt;&lt;dd&gt;Absolutely. The file is ******* for viruses and is 100% clean. ** does *** ******* special *********** **** could compromise **** device.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;dt className="font-semibold text-slate-900 dark:text-white"&gt;Will I get banned on my main Free Fire account?&lt;/dt&gt;&lt;dd&gt;No. *** proxy server is completely ******** **** the official Garena servers. Your activity here has no connection to your main account.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;dt className="font-semibold text-slate-9** dark:text-white"&gt;Does **** cost money?&lt;/dt&gt;&lt;dd&gt;No, this **** ** provided ********** free of charge. We ******* the project through non-********* ads on this website.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/dl&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="**** justify-center pt-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Link to="/instructions" className="w-full max-w-md text-center bg-gradient-to-r from-indigo-600 to-purple-6** text-white font-**** py-4 px-8 rounded-lg hover:from-indigo-7** hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-****** space-x-2 text-xl shadow-** shadow-indigo-500/30"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;******** to **** Step&lt;/span&gt;&lt;i className="fas fa-arrow-right"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/Link&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/article&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const InstructionsPage = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Instructions' }, ];</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; ****** (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Breadcrumb items={breadcrumbItems} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;******* className="max-w-4xl mx-auto bg-***** dark:bg-slate-900/70 shadow-** ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h1 className="text-3xl md:text-4** font-bold text-slate-900 dark:text-white mb-6"&gt;Installation Guide &amp; Verification&lt;/h1&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="***** dark:prose-invert prose-lg max-w-none text-slate-700 dark:text-slate-300 space-y-6"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;You're one step closer to an enhanced gaming experience! This **** ******** ********* instructions for a successful installation *** explains our ************ process, ***** helps us keep *** service **** and secure.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-4 rounded-md my-6"&gt;&lt;p className="font-semibold text-blue-800 dark:text-blue-300"&gt;Please read these instructions ********* to ensure *** proxy server ***** correctly on your device.&lt;/p&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"&gt;&lt;i className="fas fa-cogs text-indigo-400"&gt;&lt;/i&gt;How to ******* the ****** Proxy APK&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="list-******* list-inside space-y-3"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-900 dark:text-white"&gt;Enable Unknown Sources:&lt;/strong&gt; Before you can install the APK, *** need to allow your device to install apps from ******* *** Google **** Store.</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="list-disc list-inside ml-6 mt-2 text-base"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Go to your device's &lt;****** className="text-slate-9** dark:text-white"&gt;Settings&lt;/strong&gt;.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Navigate to &lt;strong className="text-slate-900 dark:text-white"&gt;Security&lt;/strong&gt; or &lt;strong className="text-slate-900 dark:text-white"&gt;Privacy&lt;/strong&gt;.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Find the ****** labeled "Install unknown apps" ** "******* sources" *** enable ** for your browser or file manager.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-9** dark:text-white"&gt;Download the APK File:&lt;/strong&gt; Proceed to the final page using the button at the bottom ** get the download link.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-9** dark:text-white"&gt;Install *** Application:&lt;/strong&gt; Once downloaded, **** the APK file from your ************* or file manager. Tap "Install" *** **** for *** process to complete.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-slate-900 dark:text-white"&gt;Launch and Play:&lt;/strong&gt; Open the app. You will land directly inside a ****** Free Fire lobby with ********** unlocked. ** login is required&mdash;**** play and enjoy!&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ol&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-****** gap-2"&gt;&lt;i className="fas fa-shield-***** text-green-500"&gt;&lt;/i&gt;Why is Verification Needed?&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;We implement a ***** verification step ** ******* our download ***** **** ******* bots and automated scripts. **** ******* **** only **** ***** can access the files, ***** ***** us:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li className="flex items-start"&gt;&lt;i className="fas fa-server text-sky-400 mr-3 w-5 text-****** flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;Keep our servers online and available for everyone.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="flex items-start"&gt;&lt;i className="*** fa-file-alt text-purple-4** mr-3 w-5 text-center flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;Ensure the integrity of the file *** download.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li className="flex items-start"&gt;&lt;i className="fas fa-ad text-yellow-500 mr-3 w-5 text-center flex-shrink-0 pt-1"&gt;&lt;/i&gt;&lt;span&gt;Support the ******* through *** ** partners, ******** ** ** **** this service 100% free.&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;*** verification is simple, free, and only takes a moment. We appreciate your understanding and support!&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded-md my-6"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h3 className="font-semibold text-yellow-800 dark:text-yellow-300 **** items-center gap-2"&gt;&lt;i className="fas fa-exclamation-triangle"&gt;&lt;/i&gt;********* Tips &amp; Warnings&lt;/h3&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="list-**** list-inside mt-2 text-yellow-7** dark:text-yellow-200"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-yellow-800 dark:text-yellow-100"&gt;Do not&lt;/strong&gt; *** **** main ******* credentials. ****** use *** guest login option.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;**** ***** is *** fun *** experimentation. It is *** intended for competitive play.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Ensure you **** a stable internet connection for the best experience.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2** font-bold text-slate-9** dark:text-***** flex items-center gap-2"&gt;&lt;i className="*** fa-******** text-orange-400"&gt;&lt;/i&gt;************ FAQs&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;dt className="font-semibold text-slate-900 dark:text-white"&gt;The app is not installing. What ****** I do?&lt;/dt&gt;&lt;dd&gt;**** sure *** **** enabled "******* ******* apps" in your ******* settings. Also, ensure you have enough storage ***** on your device.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;dt className="font-semibold text-slate-900 dark:text-white"&gt;Is rooting my device necessary?&lt;/dt&gt;&lt;dd&gt;No, *** at all. The Astute Proxy Server is designed to **** on *** ******* ******* ******* ******* root access.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;** className="font-semibold text-slate-900 dark:text-white"&gt;*** I install this alongside the original Free Fire app?&lt;/dt&gt;&lt;dd&gt;Yes, the proxy app has a different ******* name, ** it can ** installed on the **** device as the official game without *** conflicts.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/dl&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="flex justify-center pt-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;**** to="/prepare" className="w-full max-w-md text-center bg-gradient-to-r from-green-500 to-cyan-5** text-white font-bold py-4 px-8 rounded-lg hover:from-green-6** hover:to-cyan-600 transition-all hover:scale-105 duration-300 **** items-center justify-****** space-x-2 text-xl shadow-lg shadow-green-500/30"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;Proceed&lt;/span&gt;&lt;i className="fas fa-arrow-right"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/Link&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/article&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const PreparationPage = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Instructions', path: '/instructions' }, { label: 'Preparation' }, ];</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const [progress, setProgress] = useState(0);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const [statusText, setStatusText] = useState('Initializing...');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const [animationComplete, setAnimationComplete] = useState(false);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; useEffect(() =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const totalDuration = 7000;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const intervalTime = 70;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const increment = (intervalTime / totalDuration) * 100;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setStatusText('Processing...');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const interval = setInterval(() =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setProgress(prev =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const *********** = prev + increment;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (newProgress &gt;= 100) {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; clearInterval(interval);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setStatusText('Secure Link Generated');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; setAnimationComplete(true);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return 100;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (newProgress &gt; 75) { setStatusText('Generating...'); }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else if (newProgress &gt; 30) { setStatusText('Creating Link...'); }</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return newProgress;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }, intervalTime);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ****** () =&gt; clearInterval(interval);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; }, []);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; ****** (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Breadcrumb items={breadcrumbItems} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;article className="max-w-4xl mx-auto bg-white dark:bg-slate-900/70 shadow-** ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="text-3** md:text-4** font-bold text-slate-9** dark:text-***** mb-6"&gt;Final Preparation&lt;/h1&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="prose dark:prose-****** prose-** max-w-none text-slate-7** dark:text-slate-300 space-y-6"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;Your download is ****** ready. **** final page provides detailed file information, ************* checks, *** what other ***** are saying. We **** *** to be completely ********* in your download.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white **** items-center gap-2"&gt;&lt;i className="fas fa-file-archive text-indigo-400"&gt;&lt;/i&gt;File Details&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="font-semibold text-indigo-500 dark:text-indigo-4** mb-2"&gt;Option 1: Auto OBB&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="space-y-2"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-900 dark:text-white w-32 inline-block"&gt;File Name:&lt;/strong&gt; Astute_Proxy_AutoObb_OB51.apk&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-900 dark:text-white w-32 inline-block"&gt;Size:&lt;/strong&gt; 160 MB&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-slate-900 dark:text-***** w-32 inline-block"&gt;Update:&lt;/strong&gt; Obb51 (Latest)&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-slate-9** dark:text-white w-32 inline-block"&gt;Scan Status:&lt;/strong&gt; &lt;**** className="text-green-500 font-semibold"&gt;Safe&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="font-semibold text-indigo-500 dark:text-indigo-4** mb-2"&gt;Option 2: Direct Install&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="space-y-2"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-slate-900 dark:text-white w-32 inline-block"&gt;File Name:&lt;/strong&gt; Astute_Proxy_OB51.apk&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-9** dark:text-white w-32 inline-block"&gt;Size:&lt;/strong&gt; 430 MB&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-900 dark:text-white w-32 inline-block"&gt;Update:&lt;/strong&gt; Obb51 (Latest)&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-slate-9** dark:text-white w-32 inline-block"&gt;Scan Status:&lt;/strong&gt; &lt;**** className="text-green-5** font-semibold"&gt;Safe&lt;/span&gt;&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2** font-bold text-slate-900 dark:text-white flex items-center gap-2"&gt;&lt;i className="fas fa-mobile-alt text-sky-400"&gt;&lt;/i&gt;************* Information&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;*** Astute Proxy ****** is designed for broad compatibility. Please ensure your ****** ***** these minimum requirements for optimal performance:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="list-**** list-inside"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-900 dark:text-white"&gt;Android Version:&lt;/strong&gt; 5.0 (Lollipop) or higher.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;****** className="text-slate-900 dark:text-white"&gt;RAM:&lt;/strong&gt; 2 GB minimum.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong className="text-slate-900 dark:text-white"&gt;Storage:&lt;/strong&gt; At least 2** MB ** free space.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-***** flex items-center gap-2"&gt;&lt;i className="fas fa-chart-**** text-green-400"&gt;&lt;/i&gt;What's New in This Version? (Changelog)&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;We're constantly improving the experience. Here&rsquo;s what&rsquo;s new in the latest update:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="list-**** list-inside"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Updated to support the latest &lt;strong className="text-amber-400"&gt;Free Fire OB51 patch&lt;/strong&gt;.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Added all new ******* and weapon skins from the recent update.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Improved server stability *** reduced latency.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;***** minor bugs related to ***** animations.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2** font-bold text-slate-9** dark:text-white flex items-center gap-2"&gt;&lt;i className="*** fa-star text-yellow-400"&gt;&lt;/i&gt;**** Reviews&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="**** items-center mb-1"&gt;&lt;span className="font-semibold text-slate-900 dark:text-white"&gt;MahiFFQueen143&lt;/span&gt;&lt;div className="ml-**** text-yellow-400"&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="italic"&gt;"This is amazing! I can ******* *** *** all the cool skins I could never afford. Works ********* on ** device. Highly recommend!"&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-** ring-1 ring-slate-900/5"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="**** items-center mb-1"&gt;&lt;span className="font-semibold text-slate-900 dark:text-white"&gt;FF_KingGamer07&lt;/span&gt;&lt;div className="ml-auto text-yellow-400"&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="fas fa-star"&gt;&lt;/i&gt;&lt;i className="far fa-star"&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="italic"&gt;"Really good tool for checking out new items. The download was fast *** installation *** easy. A bit of lag ********* but ******* great."&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-9** dark:text-white flex items-center gap-2"&gt;&lt;i className="*** fa-***** text-purple-400"&gt;&lt;/i&gt;Your Download Progress&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;We'** prepared ********** to ensure a ****** and secure download. **** ******* has **** processed, and the file is ready on *** high-speed server.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="w-full bg-gray-200 rounded-full dark:bg-gray-700 my-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="bg-indigo-600 text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-full transition-width duration-100 ease-linear" style={{ width: `${progress}%` }}&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {statusText}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;The next page contains your unique download link. ***** the ****** below to proceed and get your file.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="flex justify-center pt-8 min-h-[88px]"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {animationComplete &amp;&amp; (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Link to="/download" className="w-full max-w-** text-center bg-gradient-to-r from-indigo-6** to-purple-6** text-white font-bold py-4 px-8 rounded-lg hover:from-indigo-700 hover:to-purple-7** transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-xl shadow-lg shadow-indigo-500/30 fade-in"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;Continue ** ******** Page&lt;/span&gt;&lt;i className="fas fa-arrow-right"&gt;&lt;/i&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/Link&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )}</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/article&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; const DownloadPage = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const DownloadSection = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const openInNewTab = (url) =&gt; { window.open(url, '_blank', 'noopener,noreferrer'); };</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ****** (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;*** className="bg-slate-100 dark:bg-slate-900/50 p-6 rounded-lg my-8 text-****** space-y-4 ring-1 ring-slate-900/5"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h3 className="text-3xl font-bold text-slate-9** dark:text-white"&gt;Astute Proxy Server&lt;/h3&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="space-y-3 flex flex-col items-center"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="text-indigo-500 dark:text-indigo-400 font-semibold"&gt;Proxy App (****** Download)&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('https://www.mediafire.com/file/ftcv0jwzb0awia7/Astute+Beta+Vip+Proxy.apk/file')} className="w-full max-w-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-lg shadow-lg shadow-indigo-500/30"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;Astute Beta *** (Auto Obb)&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('https://www.mediafire.com/file/i61c0y83jleokxt/Astute+Beta.apk.zip/file?dkey=mppeh91n24b&amp;r=1346')} className="w-full max-w-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-lg shadow-lg shadow-indigo-500/30"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;****** Beta App (Direct Install)&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="text-indigo-500 dark:text-indigo-400 font-semibold pt-2"&gt;Watch ***** Process&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;button onClick={() =&gt; openInNewTab('https://www.youtube.com/watch?v=BAvnDkK8Gjs&amp;t=234s')} className="w-full max-w-sm bg-gradient-to-r from-red-600 to-red-700 text-white font-bold py-3 px-6 rounded-lg hover:from-red-700 hover:to-red-800 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-lg shadow-lg shadow-red-500/30"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;span&gt;Watch Now ▶️&lt;/span&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/button&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; };</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Instructions', path: '/instructions' }, { label: 'Preparation', path: '/prepare' }, { label: 'Download' }, ];</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Breadcrumb items={breadcrumbItems} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;article className="max-w-4xl mx-auto bg-***** dark:bg-slate-900/70 shadow-xl ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;** className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6"&gt;Your Download is Ready!&lt;/h1&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="***** dark:prose-invert prose-lg max-w-none text-slate-700 dark:text-slate-300 space-y-6"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;Thank you *** completing the previous steps. Your secure download link for *** &lt;strong className="text-slate-900 dark:text-white"&gt;****** **** Fire Proxy Server&lt;/strong&gt; has been generated *** is available below. We appreciate your patience and support, ***** allows us to continue providing ***** ***** for free.&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"&gt;&lt;i className="fas fa-list-check text-indigo-400"&gt;&lt;/i&gt;Final Instructions &amp; Summary&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;**** is a ***** recap ** the installation process. ****** follow these steps after downloading the file to ensure everything ***** correctly:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ol className="list-******* list-inside space-y-2"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Make **** "Install from Unknown Sources" ** ******* in **** device settings.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Tap the downloaded APK file to ***** the installation.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;Once installed, open *** application and use the guest ***** option.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;***** unlimited access ** *** in-game items!&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ol&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2** font-**** text-slate-900 dark:text-white flex items-center gap-2"&gt;&lt;i className="fas fa-lightbulb text-yellow-400"&gt;&lt;/i&gt;Last-Minute Tips&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;To make **** experience even better, ******** ***** ***** tips:&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul className="list-disc list-inside"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong&gt;Restart Your Device:&lt;/strong&gt; If you experience any lag or *********** ****** after installation, a simple device restart can ***** resolve them.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong&gt;Clear Cache:&lt;/strong&gt; Regularly clearing *** app's cache **** **** device ******** can **** maintain ****** performance.&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;strong&gt;Join our Community:&lt;/strong&gt; For updates, support, and to connect with other players, consider ******* our ******** channel (link available ** *** app).&lt;/li&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;h2 className="text-2xl font-bold text-slate-900 dark:text-white **** items-center gap-2"&gt;&lt;i className="*** fa-******** text-orange-400"&gt;&lt;/i&gt;Final FAQs&lt;/h2&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;dl className="space-y-4"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;dt className="font-******** text-slate-900 dark:text-white"&gt;What if the ******** link doesn't work?&lt;/dt&gt;&lt;dd&gt;Our links are hosted on ******** servers like MediaFire. ** you encounter an issue, ****** try refreshing the page or using a ********* browser. ** *** problem persists, the link *** be *********** **** for an update.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;&lt;** className="font-semibold text-slate-900 dark:text-white"&gt;How will I get future updates?&lt;/dt&gt;&lt;dd&gt;** ********* bookmarking *** website. When a new version ** the proxy ****** is released, you can download ** from here ** following the **** process.&lt;/dd&gt;&lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/dl&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;p className="text-center pt-4"&gt;Click the ****** below ** start your download. Thank *** *** visiting ProxeeXZone!&lt;/p&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;DownloadSection /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/article&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; // --- Main *** Component ---</div>
+<div id="root">&nbsp; &nbsp; &nbsp; const App = () =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; const ******** = useLocation();</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; useEffect(() =&gt; {</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; window.scrollTo(0, 0);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; }, [location.pathname]);</div>
+<div id="root"></div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; return (</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div className="text-slate-800 dark:text-slate-2** min-h-screen font-poppins transition-colors duration-300"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Header /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;**** className="px-4 py-6 md:px-8"&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Routes&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Route path="/" element={&lt;OverviewPage /&gt;} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Route path="/instructions" element={&lt;InstructionsPage /&gt;} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Route path="/prepare" element={&lt;PreparationPage /&gt;} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Route path="/download" element={&lt;DownloadPage /&gt;} /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/Routes&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/main&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;Footer /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ScrollToTopButton /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &nbsp; };</div>
+<div id="root">&nbsp; &nbsp; &nbsp;&nbsp;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; // --- Render *** *** ---</div>
+<div id="root">&nbsp; &nbsp; &nbsp; ***** rootElement = document.getElementById('root');</div>
+<div id="root">&nbsp; &nbsp; &nbsp; ***** root = createRoot(rootElement);</div>
+<div id="root">&nbsp; &nbsp; &nbsp; root.render(</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &lt;StrictMode&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ThemeProvider&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;HashRouter&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;App /&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/HashRouter&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ThemeProvider&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; &nbsp; &lt;/StrictMode&gt;</div>
+<div id="root">&nbsp; &nbsp; &nbsp; );</div>
+<div id="root">&nbsp; &nbsp; &lt;/script&gt;</div>
+<div id="root">&nbsp; &lt;/body&gt;</div>
+<div id="root">&lt;/html&gt;</div>
+<p>
+<script type="text/babel"> const { useState, useEffect, createContext, useContext, StrictMode, useRef } = React;
+
+      const { createRoot } = ReactDOM;
+
+      const { HashRouter, Routes, Route, Link, useLocation } = ReactRouterDOM;
+
+      // --- Theme Context ---
+
+      const ThemeContext = createContext(undefined);
+
+      const getInitialTheme = () => {
+
+        if (typeof window !== 'undefined' && window.localStorage) {
+
+          const storedPrefs = window.localStorage.getItem('theme');
+
+          if (typeof storedPrefs === 'string' && (storedPrefs === 'light' || storedPrefs === 'dark')) {
+
+            return storedPrefs;
+
+          }
+
+        }
+
+        return 'dark';
+
+      };
+
+      const ThemeProvider = ({ children }) => {
+
+        const [theme, setTheme] = useState(getInitialTheme);
+
+        useEffect(() => {
+
+          const root = window.document.documentElement;
+
+          if (theme === 'dark') {
+
+            root.classList.add('dark');
+
+          } else {
+
+            root.classList.remove('dark');
+
+          }
+
+          localStorage.setItem('theme', theme);
+
+        }, [theme]);
+
+        const toggleTheme = () => {
+
+          setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+
+        };
+
+        return (
+
+          <ThemeContext.Provider value={{ theme, toggleTheme }}>
+
+            {children}
+
+          </ThemeContext.Provider>
+
+        );
+
+      };
+
+      const useTheme = () => {
+
+        const context = useContext(ThemeContext);
+
+        if (context === undefined) {
+
+          throw new Error('useTheme must be used within a ThemeProvider');
+
+        }
+
+        return context;
+
+      };
+
+      // --- Components ---
+
+      const ScrollToTopButton = () => {
+
+        const [isVisible, setIsVisible] = useState(false);
+
+        const toggleVisibility = () => { window.pageYOffset > 300 ? setIsVisible(true) : setIsVisible(false); };
+
+        const scrollToTop = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+        useEffect(() => {
+
+          window.addEventListener('scroll', toggleVisibility);
+
+          return () => window.removeEventListener('scroll', toggleVisibility);
+
+        }, []);
+
+        return (
+
+          <button type="button" onClick={scrollToTop} className={`fixed bottom-5 right-5 bg-indigo-600 text-white w-12 h-12 rounded-lg flex items-center justify-center text-xl shadow-lg hover:bg-indigo-700 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`} aria-label="Go to top">
+
+            <i className="fas fa-arrow-up"></i>
+
+          </button>
+
+        );
+
+      };
+
+      const Breadcrumb = ({ items }) => {
+
+        return (
+
+          <nav className="text-sm text-slate-500 dark:text-slate-400 mb-4 max-w-4xl mx-auto" aria-label="Breadcrumb">
+
+            <ol className="list-none p-0 inline-flex flex-wrap">
+
+              {items.map((item, index) => (
+
+                <li key={index} className="flex items-center">
+
+                  {item.path ? (
+
+                    <Link to={item.path} className="hover:text-indigo-500">{item.label}</Link>
+
+                  ) : (
+
+                    <span className="text-slate-600 dark:text-slate-500 truncate">{item.label}</span>
+
+                  )}
+
+                  {index < items.length - 1 && (
+
+                    <svg className="fill-current w-3 h-3 mx-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+
+                      <path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569 9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
+
+                    </svg>
+
+                  )}
+
+                </li>
+
+              ))}
+
+            </ol>
+
+          </nav>
+
+        );
+
+      };
+
+      
+
+      const Header = () => {
+
+        const { theme, toggleTheme } = useTheme();
+
+        return (
+
+          <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 border-b border-slate-200/50 dark:border-slate-800/50 transition-colors duration-300">
+
+            <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+
+              <div className="flex items-center space-x-4">
+
+                <Link to="/" className="text-3xl font-extrabold">
+
+                  <span className="text-indigo-600 dark:text-indigo-500">ProxeeX</span>
+
+                  <span className="text-slate-900 dark:text-white">Zone</span>
+
+                </Link>
+
+              </div>
+
+              <div className="flex items-center space-x-4">
+
+                <button onClick={toggleTheme} aria-label="Toggle theme" className={`relative text-lg flex items-center justify-between bg-slate-200 dark:bg-slate-800 p-1 rounded-full w-14 h-8 transition-colors`}>
+
+                  <i className="fas fa-sun text-yellow-500 pl-1"></i>
+
+                  <i className="fas fa-moon text-indigo-300 pr-1"></i>
+
+                  <span className={`absolute bg-white dark:bg-slate-900 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 left-1 top-1 ${theme === 'dark' ? 'translate-x-6' : ''}`}></span>
+
+                </button>
+
+                <button className="text-slate-800 dark:text-white text-2xl hidden sm:block">
+
+                  <i className="fas fa-search"></i>
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </header>
+
+        );
+
+      };
+
+      const Footer = () => {
+
+        const openInNewTab = (url) => { if (url && url !== '#') { window.open(url, '_blank', 'noopener,noreferrer'); } };
+
+        const SocialButton = ({ icon, name, baseColor, hoverColor, href }) => (
+
+          <button onClick={() => openInNewTab(href)} className={`flex-1 text-center py-3 px-4 rounded-lg text-white font-semibold transition-colors duration-300 ${baseColor} ${hoverColor}`}>
+
+            <i className={`${icon} mr-2`}></i>{name}
+
+          </button>
+
+        );
+
+        return (
+
+          <footer className="bg-white dark:bg-slate-900/70 text-slate-600 dark:text-slate-400 mt-12 pt-10 transition-colors duration-300 ring-1 ring-slate-900/5">
+
+            <div className="max-w-4xl mx-auto px-4">
+
+              <div className="mb-10">
+
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center">Social Plugin <span className="w-2 h-2 bg-indigo-500 rounded-full ml-2"></span></h3>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+                  <SocialButton icon="fab fa-facebook-f" name="Facebook" baseColor="bg-blue-600" hoverColor="hover:bg-blue-700" href="#" />
+
+                  <SocialButton icon="fab fa-telegram-plane" name="Telegram" baseColor="bg-sky-500" hoverColor="hover:bg-sky-600" href="#" />
+
+                  <SocialButton icon="fab fa-instagram" name="Instagram" baseColor="bg-pink-500" hoverColor="hover:bg-pink-600" href="#" />
+
+                  <SocialButton icon="fab fa-youtube" name="Youtube" baseColor="bg-red-600" hoverColor="hover:bg-red-700" href="#" />
+
+                </div>
+
+              </div>
+
+              <div className="text-center py-8">
+
+                <h2 className="text-4xl font-extrabold mb-2">
+
+                  <span className="text-indigo-600 dark:text-indigo-500">ProxeeX</span>
+
+                  <span className="text-slate-900 dark:text-white">Zone</span>
+
+                </h2>
+
+                <p className="max-w-md mx-auto mb-6">Explore gaming tips & tricks, resources and **** right here!</p>
+
+                <div className="flex justify-center space-x-4 text-xl">
+
+                  <button onClick={() => openInNewTab('#')} className="hover:text-indigo-500"><i className="fab fa-facebook-f"></i></button>
+
+                  <button onClick={() => openInNewTab('#')} className="hover:text-indigo-500"><i className="fab fa-youtube"></i></button>
+
+                  <button onClick={() => openInNewTab('#')} className="hover:text-indigo-500"><i className="fab fa-instagram"></i></button>
+
+                  <button onClick={() => openInNewTab('#')} className="hover:text-indigo-500"><i className="fab fa-telegram-plane"></i></button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div className="bg-slate-200 dark:bg-black py-4 transition-colors duration-300">
+
+              <div className="max-w-4xl mx-auto px-4 text-center md:flex md:justify-between items-center text-sm">
+
+                <div className="flex justify-center space-x-4 mb-2 md:mb-0">
+
+                  <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white">Home</a>
+
+                  <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white">About</a>
+
+                  <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white">Contact us</a>
+
+                  <a href="#" onClick={(e) => e.preventDefault()} className="hover:text-slate-900 dark:hover:text-white">Privacy Policy</a>
+
+                </div>
+
+                <p>&copy; All ***** Reserved Copyright &copy; ProxeeXZone</p>
+
+              </div>
+
+            </div>
+
+          </footer>
+
+        );
+
+      };
+
+      // --- Pages ---
+
+      const OverviewPage = () => {
+
+        const FeatureTable = () => {
+
+          const features = [ { name: 'All Bundles', description: 'From legendary to mythic outfits unlocked' }, { name: 'Unlimited Diamonds', description: 'Get diamonds and coins for free' }, { name: 'Emotes', description: 'Use all emotes anytime' }, { name: 'Weapon Skins', description: 'Rare & upgraded guns available' }, { name: 'No Root', description: 'Fully works without rooting your Android' }, { name: 'Anti-Ban', description: "Doesn't touch official servers – safe to use" }, { name: 'No Login', description: 'Play as guest with full access' }, ];
+
+          return (
+
+            <div className="my-8">
+
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2"><i className="fas fa-gamepad text-indigo-400"></i>Key Features of Astute **** Fire Proxy</h2>
+
+              <div className="overflow-x-auto rounded-lg ring-1 ring-slate-900/5 shadow-lg">
+
+                <table className="w-full text-left table-auto">
+
+                  <thead className="bg-slate-50 dark:bg-slate-800/50">
+
+                    <tr><th className="p-4 font-semibold text-slate-800 dark:text-white w-2/5">Feature</th><th className="p-4 font-semibold text-slate-800 dark:text-white w-3/5">Description</th></tr>
+
+                  </thead>
+
+                  <tbody className="bg-white dark:bg-slate-900/50">
+
+                    {features.map((feature, index) => (
+
+                      <tr key={index} className="border-b border-slate-200 dark:border-slate-700 last:border-b-0">
+
+                        <td className="p-4 font-medium text-slate-900 dark:text-white">{feature.name}</td>
+
+                        <td className="p-4 text-slate-700 dark:text-slate-300">{feature.description}</td>
+
+                      </tr>
+
+                    ))}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </div>
+
+          );
+
+        };
+
+        const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Free Fire', path: '/' }, { label: 'Astute Proxy Server Download' }, ];
+
+        return (
+
+          <>
+
+            <Breadcrumb items={breadcrumbItems} />
+
+            <article className="max-w-4xl mx-auto bg-white dark:bg-slate-900/70 shadow-xl ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8">
+
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">Astute Free Fire Proxy Server: Download Information</h1>
+
+              <div className="mb-6 relative overflow-hidden rounded-lg"><img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663232785318/sIumySaDIKHZQBBa.jpg" alt="Anime character with sunglasses" className="w-full rounded-lg shadow-lg shadow-indigo-500/20" /></div>
+
+              <div className="prose dark:prose-invert prose-lg max-w-none text-slate-700 dark:text-slate-300 space-y-6">
+
+                <p>Welcome! This page ******** all the details *** need ***** *** <strong className="text-slate-900 dark:text-white">Astute Free Fire Proxy Server</strong>. ** believe ** transparency, so you *** understand ******* what you're *********** *** *** it ******** your ****** experience.</p>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-question-circle text-indigo-400"></i>What is the Astute Free Fire ***** Server?</h2>
+
+                <p>*** <strong className="text-slate-900 dark:text-white">****** Proxy Server</strong> is a custom-built private *********** for Free Fire enthusiasts. It's *** a hack or a cheat, but rather a ********* server that lets you ********** the **** **** ********** unlocked. Think ** ** as a VIP pass ** explore *** the ******* ***** *** features ****** *** to offer, without any impact on your official game account.</p>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-star text-yellow-400"></i>Why ** People ******** It?</h2>
+
+                <p>Players love the ****** Proxy Server for several reasons:</p>
+
+                <ul className="space-y-4">
+
+                  <li className="flex items-start"><i className="fas fa-infinity text-cyan-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span><strong>Total Freedom:</strong> Instantly access every skin, bundle, emote, and weapon in the game. It's the ultimate way ** customize your character and **** **** perfect style.</span></li>
+
+                  <li className="flex items-start"><i className="fas fa-shield-alt text-green-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span><strong>Safe Exploration:</strong> Because it operates on a separate server, **** main account is never at risk. You *** experiment freely without fear of **** or penalties.</span></li>
+
+                  <li className="flex items-start"><i className="fas fa-lightbulb text-purple-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span><strong>Strategic Advantage:</strong> Test out different character skills *** weapon attachments to discover ******** ************ you can apply ** the official game.</span></li>
+
+                </ul>
+
+                <FeatureTable />
+
+                <div className="my-8"><img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663232785318/SJxbOeeVCkhJZikt.jpg" alt="Game character" className="w-full rounded-lg shadow-lg shadow-indigo-500/20" /><p className="text-center text-slate-500 dark:text-slate-400 mt-2 italic">****** **** full potential.</p></div>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-info-circle text-sky-400"></i>Version Details & User Benefits</h2>
+
+                <p>**** ******** is for the latest version, fully compatible with the <strong className="text-amber-400">OB51 Update</strong>. We regularly ****** the server to ensure a smooth, bug-**** experience. ** ***** this proxy, *** ******* from:</p>
+
+                <ul className="space-y-4">
+
+                  <li className="flex items-start"><i className="fas fa-rocket text-red-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span><strong>Instant Access:</strong> No waiting, ** grinding. Everything ** ******** the moment *** log in.</span></li>
+
+                  <li className="flex items-start"><i className="fas fa-user-friends text-blue-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span><strong>Guest Login:</strong> ** **** ** *** your personal credentials. *** proxy works perfectly with a guest account.</span></li>
+
+                  <li className="flex items-start"><i className="fas fa-mobile-alt text-slate-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span><strong>Android Optimized:</strong> The *** is lightweight and designed to run smoothly on a wide range of Android ******* ******* rooting.</span></li>
+
+                </ul>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-question text-orange-400"></i>Frequently ***** Questions (FAQ)</h2>
+
+                <dl className="space-y-4">
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">Is this safe for my device?</dt><dd>Absolutely. *** **** is scanned *** ******* *** is 100% clean. It **** *** require ******* permissions that could ********** your device.</dd></div>
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">**** I get banned on my main **** Fire account?</dt><dd>No. *** proxy server is completely separate from the official ****** servers. **** activity here has no connection to **** main account.</dd></div>
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">Does this cost money?</dt><dd>No, this tool is provided ********** free of charge. We ******* the project through non-********* *** on this website.</dd></div>
+
+                </dl>
+
+                <div className="flex justify-center pt-8">
+
+                  <Link to="/instructions" className="w-full max-w-md text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-8 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-xl shadow-lg shadow-indigo-500/30">
+
+                    <span>Continue to Next Step</span><i className="fas fa-arrow-right"></i>
+
+                  </Link>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          </>
+
+        );
+
+      };
+
+      const InstructionsPage = () => {
+
+        const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Instructions' }, ];
+
+        return (
+
+          <>
+
+            <Breadcrumb items={breadcrumbItems} />
+
+            <article className="max-w-4xl mx-auto bg-white dark:bg-slate-900/70 shadow-xl ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8">
+
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">************ Guide & Verification</h1>
+
+              <div className="prose dark:prose-invert prose-lg max-w-none text-slate-700 dark:text-slate-300 space-y-6">
+
+                <p>You're one step closer ** ** enhanced gaming experience! This page ******** essential ************ for a ********** installation and explains *** verification process, which helps ** keep *** service free *** secure.</p>
+
+                <div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-4 rounded-md my-6"><p className="font-semibold text-blue-800 dark:text-blue-300">Please read these instructions ********* to ensure the ***** server works ********* ** your device.</p></div>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-cogs text-indigo-400"></i>*** to Install the Astute Proxy APK</h2>
+
+                <ol className="list-decimal list-inside space-y-3">
+
+                  <li><strong className="text-slate-900 dark:text-white">Enable Unknown Sources:</strong> Before you *** ******* the APK, you **** to ***** your device to install apps from outside the Google Play Store.
+
+                    <ul className="list-disc list-inside ml-6 mt-2 text-base">
+
+                      <li>** ** your device's <strong className="text-slate-900 dark:text-white">Settings</strong>.</li>
+
+                      <li>Navigate to <strong className="text-slate-900 dark:text-white">Security</strong> or <strong className="text-slate-900 dark:text-white">Privacy</strong>.</li>
+
+                      <li>Find the option ******* "******* unknown apps" or "Unknown sources" and enable it for your browser or file manager.</li>
+
+                    </ul>
+
+                  </li>
+
+                  <li><strong className="text-slate-900 dark:text-white">******** the APK File:</strong> ******* to the final page using *** ****** at the bottom to get the download link.</li>
+
+                  <li><strong className="text-slate-900 dark:text-white">Install the Application:</strong> Once downloaded, **** the *** file from your ************* or **** manager. Tap "Install" and wait for *** process to complete.</li>
+
+                  <li><strong className="text-slate-900 dark:text-white">Launch and Play:</strong> Open the app. You will land directly inside a modded Free Fire ***** with ********** unlocked. ** login is required—just play and enjoy!</li>
+
+                </ol>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-shield-check text-green-500"></i>Why is Verification Needed?</h2>
+
+                <p>We ********* a quick verification step to protect *** download links from harmful **** *** ********* scripts. **** ensures **** only **** users can ****** the files, which helps us:</p>
+
+                <ul className="space-y-4">
+
+                  <li className="flex items-start"><i className="fas fa-server text-sky-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span>Keep our servers online and available for everyone.</span></li>
+
+                  <li className="flex items-start"><i className="fas fa-file-alt text-purple-400 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span>Ensure the integrity of the file you download.</span></li>
+
+                  <li className="flex items-start"><i className="fas fa-ad text-yellow-500 mr-3 w-5 text-center flex-shrink-0 pt-1"></i><span>Support *** project through our ad partners, allowing ** to keep this service 100% free.</span></li>
+
+                </ul>
+
+                <p>*** verification is simple, free, *** only ***** a moment. We ********** your understanding and support!</p>
+
+                <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded-md my-6">
+
+                  <h3 className="font-semibold text-yellow-800 dark:text-yellow-300 flex items-center gap-2"><i className="fas fa-exclamation-triangle"></i>Important Tips & Warnings</h3>
+
+                  <ul className="list-disc list-inside mt-2 text-yellow-700 dark:text-yellow-200">
+
+                    <li><strong className="text-yellow-800 dark:text-yellow-100">Do not</strong> use your main account credentials. Always *** the ***** ***** option.</li>
+
+                    <li>This proxy ** for fun and experimentation. It is not ******** for *********** play.</li>
+
+                    <li>Ensure *** have a stable internet connection for *** **** experience.</li>
+
+                  </ul>
+
+                </div>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-question text-orange-400"></i>Installation FAQs</h2>
+
+                <dl className="space-y-4">
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">The app ** not installing. **** ****** I do?</dt><dd>Make sure you have ******* "Install unknown apps" in your ******* settings. Also, ensure you **** enough storage space on your device.</dd></div>
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">Is rooting my ****** necessary?</dt><dd>No, not ** all. The Astute Proxy ****** is designed to **** on all Android devices ******* needing root access.</dd></div>
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">*** I ******* this ********* the ******** **** **** app?</dt><dd>Yes, *** proxy app has a different package name, so it can be installed on the same device as the official game without any conflicts.</dd></div>
+
+                </dl>
+
+                <div className="flex justify-center pt-8">
+
+                  <Link to="/prepare" className="w-full max-w-md text-center bg-gradient-to-r from-green-500 to-cyan-500 text-white font-bold py-4 px-8 rounded-lg hover:from-green-600 hover:to-cyan-600 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-xl shadow-lg shadow-green-500/30">
+
+                    <span>Proceed</span><i className="fas fa-arrow-right"></i>
+
+                  </Link>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          </>
+
+        );
+
+      };
+
+      const PreparationPage = () => {
+
+        const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Instructions', path: '/instructions' }, { label: 'Preparation' }, ];
+
+        const [progress, setProgress] = useState(0);
+
+        const [statusText, setStatusText] = useState('Initializing...');
+
+        const [animationComplete, setAnimationComplete] = useState(false);
+
+        useEffect(() => {
+
+          const totalDuration = 7000;
+
+          const intervalTime = 70;
+
+          const increment = (intervalTime / totalDuration) * 100;
+
+          setStatusText('Processing...');
+
+          const interval = setInterval(() => {
+
+            setProgress(prev => {
+
+              const newProgress = prev + increment;
+
+              if (newProgress >= 100) {
+
+                clearInterval(interval);
+
+                setStatusText('Secure Link Generated');
+
+                setAnimationComplete(true);
+
+                return 100;
+
+              }
+
+              if (newProgress > 75) { setStatusText('Generating...'); }
+
+              else if (newProgress > 30) { setStatusText('Creating Link...'); }
+
+              return newProgress;
+
+            });
+
+          }, intervalTime);
+
+          return () => clearInterval(interval);
+
+        }, []);
+
+        return (
+
+          <>
+
+            <Breadcrumb items={breadcrumbItems} />
+
+            <article className="max-w-4xl mx-auto bg-white dark:bg-slate-900/70 shadow-xl ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8">
+
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">***** Preparation</h1>
+
+              <div className="prose dark:prose-invert prose-lg max-w-none text-slate-700 dark:text-slate-300 space-y-6">
+
+                <p>Your download is almost ready. This ***** page provides detailed file information, compatibility checks, *** what other users *** saying. We want you ** be ********** confident ** **** download.</p>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-file-archive text-indigo-400"></i>File Details</h2>
+
+                <div className="space-y-4">
+
+                  <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5">
+
+                    <p className="font-semibold text-indigo-500 dark:text-indigo-400 mb-2">Option 1: Auto OBB</p>
+
+                    <ul className="space-y-2">
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">File Name:</strong> Astute_Proxy_AutoObb_OB51.apk</li>
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">Size:</strong> 160 MB</li>
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">Update:</strong> Obb51 (Latest)</li>
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">Scan Status:</strong> <span className="text-green-500 font-semibold">Safe</span></li>
+
+                    </ul>
+
+                  </div>
+
+                  <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5">
+
+                    <p className="font-semibold text-indigo-500 dark:text-indigo-400 mb-2">Option 2: Direct Install</p>
+
+                    <ul className="space-y-2">
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">File Name:</strong> Astute_Proxy_OB51.apk</li>
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">Size:</strong> 430 MB</li>
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">Update:</strong> Obb51 (Latest)</li>
+
+                      <li><strong className="text-slate-900 dark:text-white w-32 inline-block">Scan Status:</strong> <span className="text-green-500 font-semibold">Safe</span></li>
+
+                    </ul>
+
+                  </div>
+
+                </div>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-mobile-alt text-sky-400"></i>Compatibility Information</h2>
+
+                <p>The Astute ***** ****** is designed for ***** compatibility. Please ****** your ****** meets these minimum ************ for optimal performance:</p>
+
+                <ul className="list-disc list-inside">
+
+                  <li><strong className="text-slate-900 dark:text-white">Android Version:</strong> 5.0 (Lollipop) or higher.</li>
+
+                  <li><strong className="text-slate-900 dark:text-white">RAM:</strong> 2 GB minimum.</li>
+
+                  <li><strong className="text-slate-900 dark:text-white">Storage:</strong> ** least 2** MB of free space.</li>
+
+                </ul>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-chart-line text-green-400"></i>What's New in This Version? (Changelog)</h2>
+
+                <p>We're constantly improving *** experience. Here’s what’s new in the latest update:</p>
+
+                <ul className="list-disc list-inside">
+
+                  <li>Updated to support the latest <strong className="text-amber-400">Free **** OB51 patch</strong>.</li>
+
+                  <li>Added *** new bundles and ****** skins **** the ****** update.</li>
+
+                  <li>******** server stability and reduced latency.</li>
+
+                  <li>Fixed minor bugs related to ***** animations.</li>
+
+                </ul>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-star text-yellow-400"></i>User Reviews</h2>
+
+                <div className="space-y-4">
+
+                  <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5">
+
+                    <div className="flex items-center mb-1"><span className="font-semibold text-slate-900 dark:text-white">MahiFFQueen143</span><div className="ml-auto text-yellow-400"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i></div></div>
+
+                    <p className="italic">"**** is amazing! I can ******* try out all the cool ***** I ***** never afford. Works perfectly ** ** device. Highly recommend!"</p>
+
+                  </div>
+
+                  <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg ring-1 ring-slate-900/5">
+
+                    <div className="flex items-center mb-1"><span className="font-semibold text-slate-900 dark:text-white">FF_KingGamer07</span><div className="ml-auto text-yellow-400"><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="far fa-star"></i></div></div>
+
+                    <p className="italic">"Really **** tool for checking out new items. The download *** fast and installation was easy. A bit of *** sometimes but ******* great."</p>
+
+                  </div>
+
+                </div>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-tasks text-purple-400"></i>Your Download Progress</h2>
+
+                <p>We've ******** everything to ensure a smooth and secure download. Your request has been processed, and the file is ***** on our high-speed server.</p>
+
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700 my-4">
+
+                  <div className="bg-indigo-600 text-xs font-medium text-blue-100 text-center p-1 leading-none rounded-full transition-width duration-100 ease-linear" width: `${progress}%` }}>
+
+                    {statusText}
+
+                  </div>
+
+                </div>
+
+                <p>The next **** contains your unique ******** link. ***** the button below ** proceed and get your file.</p>
+
+                <div className="flex justify-center pt-8 min-h-[88px]">
+
+                  {animationComplete && (
+
+                    <Link to="/download" className="w-full max-w-md text-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-8 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-xl shadow-lg shadow-indigo-500/30 fade-in">
+
+                      <span>Continue to Download Page</span><i className="fas fa-arrow-right"></i>
+
+                    </Link>
+
+                  )}
+
+                </div>
+
+              </div>
+
+            </article>
+
+          </>
+
+        );
+
+      };
+
+      const DownloadPage = () => {
+
+        const DownloadSection = () => {
+
+          const openInNewTab = (url) => { window.open(url, '_blank', 'noopener,noreferrer'); };
+
+          return (
+
+            <div className="bg-slate-100 dark:bg-slate-900/50 p-6 rounded-lg my-8 text-center space-y-4 ring-1 ring-slate-900/5">
+
+              <h3 className="text-3xl font-bold text-slate-900 dark:text-white">Astute Proxy Server</h3>
+
+              <div className="space-y-3 flex flex-col items-center">
+
+                <p className="text-indigo-500 dark:text-indigo-400 font-semibold">Proxy *** (Direct Download)</p>
+
+                <button onClick={() => openInNewTab('https://www.mediafire.com/file/ftcv0jwzb0awia7/Astute+Beta+Vip+Proxy.apk/file')} className="w-full max-w-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-lg shadow-lg shadow-indigo-500/30">
+
+                  <span>Astute Beta App (Auto Obb)</span>
+
+                </button>
+
+                <button onClick={() => openInNewTab('https://www.mediafire.com/file/i61c0y83jleokxt/Astute+Beta.apk.zip/file?dkey=mppeh91n24b&r=1346')} className="w-full max-w-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-lg shadow-lg shadow-indigo-500/30">
+
+                  <span>Astute Beta App (****** Install)</span>
+
+                </button>
+
+                <p className="text-indigo-500 dark:text-indigo-400 font-semibold pt-2">Watch Apply Process</p>
+
+                <button onClick={() => openInNewTab('https://www.youtube.com/watch?v=BAvnDkK8Gjs&t=234s')} className="w-full max-w-sm bg-gradient-to-r from-red-600 to-red-700 text-white font-bold py-3 px-6 rounded-lg hover:from-red-700 hover:to-red-800 transition-all hover:scale-105 duration-300 flex items-center justify-center space-x-2 text-lg shadow-lg shadow-red-500/30">
+
+                  <span>Watch Now ▶️</span>
+
+                </button>
+
+              </div>
+
+            </div>
+
+          );
+
+        };
+
+        const breadcrumbItems = [ { label: 'Home', path: '/' }, { label: 'Instructions', path: '/instructions' }, { label: 'Preparation', path: '/prepare' }, { label: 'Download' }, ];
+
+        return (
+
+          <>
+
+            <Breadcrumb items={breadcrumbItems} />
+
+            <article className="max-w-4xl mx-auto bg-white dark:bg-slate-900/70 shadow-xl ring-1 ring-slate-900/5 rounded-xl p-6 md:p-10 my-8">
+
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">Your Download is Ready!</h1>
+
+              <div className="prose dark:prose-invert prose-lg max-w-none text-slate-700 dark:text-slate-300 space-y-6">
+
+                <p>***** you *** completing *** previous steps. Your secure download link for the <strong className="text-slate-900 dark:text-white">Astute Free Fire Proxy Server</strong> *** **** generated and ** available below. ** ********** your ******** and support, ***** allows us to continue providing these tools for free.</p>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-list-check text-indigo-400"></i>Final Instructions & Summary</h2>
+
+                <p>Here is a ***** recap ** *** installation process. Please follow these steps after *********** the **** to ensure everything ***** correctly:</p>
+
+                <ol className="list-decimal list-inside space-y-2">
+
+                  <li>**** sure "Install **** ******* Sources" is ******* in your ****** settings.</li>
+
+                  <li>Tap the downloaded APK file to begin *** installation.</li>
+
+                  <li>Once installed, open the application and use the guest login option.</li>
+
+                  <li>Enjoy unlimited access to all in-game items!</li>
+
+                </ol>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-lightbulb text-yellow-400"></i>Last-Minute Tips</h2>
+
+                <p>To make your experience even better, consider these final tips:</p>
+
+                <ul className="list-disc list-inside">
+
+                  <li><strong>Restart **** Device:</strong> If *** ********** *** lag or performance issues ***** installation, a simple device restart can often ******* them.</li>
+
+                  <li><strong>Clear Cache:</strong> Regularly ******** the app's cache from your device settings can help ******** smooth performance.</li>
+
+                  <li><strong>Join our Community:</strong> For updates, support, and ** connect **** other players, consider joining our Telegram channel (**** ********* in the app).</li>
+
+                </ul>
+
+                <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i className="fas fa-question text-orange-400"></i>***** FAQs</h2>
+
+                <dl className="space-y-4">
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">What if the ******** link doesn't work?</dt><dd>Our links are hosted on reliable ******* like MediaFire. If you ********* an issue, please try refreshing the page or using a different browser. If the problem persists, the link may ** temporarily **** for an update.</dd></div>
+
+                  <div><dt className="font-semibold text-slate-900 dark:text-white">How will I get future updates?</dt><dd>We recommend bookmarking our website. When a new version of *** proxy server is released, you *** download it from **** by following the same process.</dd></div>
+
+                </dl>
+
+                <p className="text-center pt-4">Click *** button ***** to start your download. Thank you for visiting ProxeeXZone!</p>
+
+                <DownloadSection />
+
+              </div>
+
+            </article>
+
+          </>
+
+        );
+
+      };
+
+      // --- Main App Component ---
+
+      const App = () => {
+
+        const location = useLocation();
+
+        useEffect(() => {
+
+          window.scrollTo(0, 0);
+
+        }, [location.pathname]);
+
+        return (
+
+          <div className="text-slate-800 dark:text-slate-200 min-h-screen font-poppins transition-colors duration-300">
+
+            <Header />
+
+            <main className="px-4 py-6 md:px-8">
+
+              <Routes>
+
+                <Route path="/" element={<OverviewPage />} />
+
+                <Route path="/instructions" element={<InstructionsPage />} />
+
+                <Route path="/prepare" element={<PreparationPage />} />
+
+                <Route path="/download" element={<DownloadPage />} />
+
+              </Routes>
+
+            </main>
+
+            <Footer />
+
+            <ScrollToTopButton />
+
+          </div>
+
+        );
+
+      };
+
+      
+
+      // --- Render the App ---
+
+      const rootElement = document.getElementById('root');
+
+      const root = createRoot(rootElement);
+
+      root.render(
+
+        <StrictMode>
+
+          <ThemeProvider>
+
+            <HashRouter>
+
+              <App />
+
+            </HashRouter>
+
+          </ThemeProvider>
+
+        </StrictMode>
+
+      );
+
+    </script>
+</p>
+<div style="color: red">Word to HTML trial - please <a href="https://wordtohtml.net/site/payment">Go PRO</a> to get whole HTML.</div>
